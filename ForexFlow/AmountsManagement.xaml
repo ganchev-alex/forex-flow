@@ -1,0 +1,38 @@
+﻿<Window x:Class="ForexFlow.View.AmountsManagement"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ForexFlow.View"
+        xmlns:conv="clr-namespace:ForexFlow.View.Converters"
+        mc:Ignorable="d"
+        Title="Amounts Management" Height="450" Width="865" MinHeight="450" MaxHeight="450" MinWidth="865" MaxWidth="865"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <conv:StringToDecimalConverter x:Key="StringToDecimal"/>
+    </Window.Resources>
+    <Grid>
+        <Border Margin="-800,-370,0,0" Width="30" Height="30" CornerRadius="5" BorderThickness="1.5" BorderBrush="#FF7B7B7B">
+            <Button  Margin="-0.5,-2,0,0" Width="30" Height="30" FontSize="16" Background="{x:Null}" BorderThickness="0" Foreground="#FF7B7B7B" Click="OnBack" >📑</Button>
+        </Border>
+        <Label Content="Add New Amount" HorizontalAlignment="Left" Margin="45,6,0,0" VerticalAlignment="Top" Width="162" FontFamily="Bahnschrift SemiBold" FontSize="18" Foreground="#FF5771FF" Height="32"/>
+        <TextBox Text="{Binding NewSingleCurrencyAmountNotifier.Description, UpdateSourceTrigger=PropertyChanged}" x:Name="DescriptionTextBox" HorizontalAlignment="Left" Margin="102,38,0,0" VerticalAlignment="Top" Width="285" FontFamily="Bahnschrift SemiLight" Height="20" FontSize="16"/>
+        <Label Content="Description:" HorizontalAlignment="Left" Margin="5,34,0,0" VerticalAlignment="Top" Width="96" FontFamily="Bahnschrift SemiBold" FontSize="16" Foreground="Black" Height="29"/>
+        <Label Content="Amount:" HorizontalAlignment="Left" Margin="400,35,0,0" VerticalAlignment="Top" Width="96" FontFamily="Bahnschrift SemiBold" FontSize="16" Foreground="Black" Height="29"/>
+        <TextBox Text="{Binding NewSingleCurrencyAmountNotifier.Amount, Converter={StaticResource StringToDecimal}, UpdateSourceTrigger=PropertyChanged}" x:Name="AmountTextBox" HorizontalAlignment="Left" Margin="472,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="131" FontFamily="Bahnschrift SemiLight" Height="20" FontSize="16" TextAlignment="Right"/>
+        <ComboBox ItemsSource="{Binding CurrencyCodes}" SelectedItem="{Binding NewSingleCurrencyAmountNotifier.CurrencyCode, Mode=TwoWay}" HorizontalAlignment="Left" Margin="608,38,0,0" VerticalAlignment="Top" Width="97" FontFamily="Bahnschrift SemiBold" FontSize="16" Height="20" Background="{x:Null}"/>
+        <Button Command="{Binding SaveNewAmountCommand}" x:Name="CurrencyMangement" Content="Add" HorizontalAlignment="Left" Margin="730,34,0,0" VerticalAlignment="Top" Height="29" Width="117" Foreground="White" Background="#FF5771FF" FontFamily="Bahnschrift SemiBold" BorderThickness="0" FontSize="16"/>
+        <ListView ItemsSource="{Binding SingleCurrencyAmounts}" Margin="0,70,0,0" BorderBrush="#FF5771FF" BorderThickness="0,1,0,0">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Height="95">
+                        <Label Content="{Binding CurrencyCode}" HorizontalAlignment="Left" Margin="15,6,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift" Foreground="#FF5771FF" FontSize="36" Width="87" Height="46"/>
+                        <Label Content="{Binding Description}" HorizontalAlignment="Left" Margin="15,0,0,0" VerticalAlignment="Top" Width="415" MaxWidth="415" FontFamily="Bahnschrift SemiBold" FontSize="18" Foreground="Black" Height="54" FontStyle="Italic"/>
+                        <Label Content="{Binding FormattedAmount}" HorizontalAlignment="Left" Margin="95,-100,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift" Foreground="Black" FontSize="36" Width="280" Height="46" RenderTransformOrigin="0.599,0.534"/>
+                        <Button x:Name="Actions" Content="Actions" HorizontalAlignment="Left" Margin="680,-75,0,0" VerticalAlignment="Top" Height="32.5" Width="125" BorderBrush="#005771FF" Foreground="White" Background="#FF5771FF" FontFamily="Bahnschrift SemiBold" BorderThickness="1,1,1,1" FontSize="18" Click="OnOpenActions"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Window>

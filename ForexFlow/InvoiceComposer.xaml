@@ -1,0 +1,73 @@
+﻿<Window x:Class="ForexFlow.View.InvoiceComposer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ForexFlow.View"
+        xmlns:conv="clr-namespace:ForexFlow.View.Converters"
+        mc:Ignorable="d"
+        Title="InvoiceComposer" Height="700" MinHeight="700" MaxHeight="700" Width="550" MinWidth="550" MaxWidth="550"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <conv:StringToDecimalConverter x:Key="StringToDecimal"/>
+        <conv:StringToIntConverter x:Key="StringToInt"/>
+    </Window.Resources>
+    <Grid>
+        <Label Width="125" Height="50" Margin="-400,-615,0,0" FontFamily="Bahnschrift SemiBold SemiCondensed" FontSize="36" Foreground="#FF5771FF">INVOICE</Label>
+        <Label Width="125" Height="25" Margin="-400,-540,0,0" FontFamily="Bahnschrift" FontSize="13.5">Company Name:</Label>
+        <TextBox Text="{Binding ActionsPayload.ComposedInvoice.IssuerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="-155,-537.5,0,0" Width="150" Height="19" Background="#FFE0E0E0" FontFamily="Bahnschrift SemiBold" FontSize="13.5" BorderBrush="{x:Null}"/>
+        <Label Width="125" Height="25" Margin="-400,-490,0,0" FontFamily="Bahnschrift" FontSize="13.5">Company Address:</Label>
+        <TextBox Text="{Binding ActionsPayload.ComposedInvoice.IssuerAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="-125,-487.5,0,0" Width="150" Height="19" Background="#FFE0E0E0" FontFamily="Bahnschrift SemiBold" FontSize="13.5" BorderBrush="{x:Null}"/>
+        <Label Width="190" Height="25" Margin="-335,-440,0,0" FontFamily="Bahnschrift" FontSize="13.5">Company City, Country/State:</Label>
+        <TextBox Text="{Binding ActionsPayload.ComposedInvoice.IssuerCountry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,-440,0,0" Width="150" Height="19" Background="#FFE0E0E0" FontFamily="Bahnschrift SemiBold" FontSize="13.5" BorderBrush="{x:Null}"/>
+        <Label Width="125" Height="50" Margin="-132,-355,0,0" FontFamily="Bahnschrift SemiBold SemiCondensed" FontSize="22" Foreground="#FF5771FF">BILL TO</Label>
+        <Label Width="125" Height="25" Margin="-400,-320,0,0" FontFamily="Bahnschrift" FontSize="13.5">Name:</Label>
+        <TextBox Text="{Binding ActionsPayload.ComposedInvoice.BillToName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="-100,-319,0,0" Width="150" Height="19" Background="#FFE0E0E0" FontFamily="Bahnschrift SemiBold" FontSize="13.5" BorderBrush="{x:Null}"/>
+        <Label Width="125" Height="25" Margin="-400,-280,0,0" FontFamily="Bahnschrift" FontSize="13.5">Address:</Label>
+        <TextBox Text="{Binding ActionsPayload.ComposedInvoice.BillToAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="-100,-277.5,0,0" Width="150" Height="19" Background="#FFE0E0E0" FontFamily="Bahnschrift SemiBold" FontSize="13.5" BorderBrush="{x:Null}"/>
+        <Label Width="125" Height="25" Margin="-400,-235,0,0" FontFamily="Bahnschrift" FontSize="13.5">City, Country/State:</Label>
+        <TextBox Text="{Binding ActionsPayload.ComposedInvoice.BillToCountry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="-100,-233.5,0,0" Width="150" Height="19" Background="#FFE0E0E0" FontFamily="Bahnschrift SemiBold" FontSize="13.5" BorderBrush="{x:Null}"/>
+        <Label Width="125" Height="50" Margin="170,-355,0,0" FontFamily="Bahnschrift SemiBold SemiCondensed" FontSize="22" Foreground="#FF5771FF">SHIP TO</Label>
+        <TextBox Text="{Binding ActionsPayload.ComposedInvoice.RecipientName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="210,-319,0,0" Width="150" Height="19" Background="#FFE0E0E0" FontFamily="Bahnschrift SemiBold" FontSize="13.5" BorderBrush="{x:Null}"/>
+        <TextBox Text="{Binding ActionsPayload.ComposedInvoice.RecipientAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="210,-277.5,0,0" Width="150" Height="19" Background="#FFE0E0E0" FontFamily="Bahnschrift SemiBold" FontSize="13.5" BorderBrush="{x:Null}"/>
+        <TextBox Text="{Binding ActionsPayload.ComposedInvoice.RecipientCountry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="210,-233.5,0,0" Width="150" Height="19" Background="#FFE0E0E0" FontFamily="Bahnschrift SemiBold" FontSize="13.5" BorderBrush="{x:Null}"/>
+        <Border Margin="0,-125,0,0" Width="525" Height="30" BorderBrush="#FF5771FF" BorderThickness="0,1.5,0,1.5"/>
+        <Label Width="125" Height="50" Margin="-400,-107,0,0" FontFamily="Bahnschrift SemiBold SemiCondensed" FontSize="20" Foreground="Black">QTY</Label>
+        <Label Width="125" Height="50" Margin="-300,-107,0,0" FontFamily="Bahnschrift SemiBold SemiCondensed" FontSize="20" Foreground="Black">Description</Label>
+        <Label Width="125" Height="50" Margin="220,-107,0,0" FontFamily="Bahnschrift SemiBold SemiCondensed" FontSize="20" Foreground="Black">Unit Price</Label>
+        <Label Width="125" Height="50" Margin="415,-107,0,0" FontFamily="Bahnschrift SemiBold SemiCondensed" FontSize="20" Foreground="Black">Total Amount</Label>
+        <TextBox Text="{Binding ActionsPayload.NewInvoiceItem.Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringToInt}}" Margin="-485,-65,0,0" TextAlignment="Center" Width="30" Height="19" Background="#FFE0E0E0" FontFamily="Bahnschrift SemiBold" FontSize="13.5" BorderBrush="{x:Null}"/>
+        <TextBox Text="{Binding ActionsPayload.NewInvoiceItem.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="-165,-65,0,0" Width="250" Height="19" Background="#FFE0E0E0" FontFamily="Bahnschrift SemiBold" FontSize="13.5" BorderBrush="{x:Null}"/>
+        <TextBox Text="{Binding ActionsPayload.NewInvoiceItem.UnitPrice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringToDecimal}}" Margin="190,-65,0,0" TextAlignment="Right" Width="85" Height="19" Background="#FFE0E0E0" FontFamily="Bahnschrift SemiBold" FontSize="13.5" BorderBrush="{x:Null}"/>
+        <Button Command="{Binding AddNewItemToInvoiceCommand}" Width="115" Height="22" Margin="410,-65,0,0" FontFamily="Bahnschrift SemiBold" FontSize="15" Foreground="White" Background="#FF5771FF" BorderBrush="{x:Null}">Add To Invoice</Button>
+        <ComboBox ItemsSource="{Binding Currencies}" SelectedItem="{Binding ActionsPayload.SelectedCurrency, Mode=TwoWay}" DisplayMemberPath="Code" HorizontalAlignment="Left" Margin="435,55,0,0" VerticalAlignment="Top" Width="95" FontFamily="Bahnschrift SemiBold" FontSize="16" Height="25" Background="{x:Null}"/>
+        <Button Width="160" Height="30" Margin="365,-610,0,0" FontFamily="Bahnschrift SemiBold" FontSize="20" Foreground="White" Background="#FF5771FF" BorderBrush="{x:Null}" Click="OnPreview">Preview Invoice</Button>
+        <Button Width="85" Height="28" Margin="110,-609,0,0" FontFamily="Bahnschrift SemiBold" FontSize="20" Foreground="#FF5771FF" Background="{x:Null}" BorderBrush="#FF5771FF" Click="OnCancel">Cancel</Button>
+        <ItemsControl ItemsSource="{Binding InvoiceItemsHolder}" Height="350" Margin="0,325,0,0">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                        <TextBlock Width="30" Height="20" Margin="9.5,0,0,0" TextAlignment="Center"
+                               FontFamily="Bahnschrift SemiBold SemiCondensed" FontSize="16" Foreground="Black"
+                               Text="{Binding Quantity}" />
+                        <TextBlock Width="250" Height="20" Margin="22.5,0,0,0"
+                               FontFamily="Bahnschrift SemiBold SemiCondensed" FontSize="16" Foreground="Black"
+                               Text="{Binding Description}" />
+                        <TextBlock Width="85" Height="20" Margin="5,0,0,0" TextAlignment="Right"
+                               FontFamily="Bahnschrift SemiBold SemiCondensed" FontSize="16" Foreground="Black"
+                               >
+                            <Run Text="{Binding UnitPrice}"/>
+                            <Run Text="{Binding DataContext.ActionsPayload.SelectedCurrency.Symbol, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+                        </TextBlock>
+                        <TextBlock Width="82.5" Height="20" Margin="15,0,0,0"
+                               FontFamily="Bahnschrift SemiBold SemiCondensed" FontSize="16" Foreground="Black">
+                            <Run Text="{Binding TotalAmount, Mode=OneWay}"/>
+                            <Run Text="{Binding DataContext.ActionsPayload.SelectedCurrency.Symbol, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+                        </TextBlock>
+                        <Button Command="{Binding DataContext.RemoveItemFromInvoiceCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding}" Width="30" Height="30" Margin="0,-5,0,0" FontSize="15" Foreground="#FF7B7B7B" Background="{x:Null}" BorderBrush="{x:Null}">🗑️</Button>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</Window>

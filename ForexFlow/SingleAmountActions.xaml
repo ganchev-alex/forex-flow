@@ -1,0 +1,67 @@
+﻿<Window x:Class="ForexFlow.View.SingleAmountActions"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ForexFlow.View"
+        xmlns:conv="clr-namespace:ForexFlow.View.Converters"
+        mc:Ignorable="d"
+        Title="SingleAmountActions" MinHeight="550" MinWidth="850" MaxHeight="550" MaxWidth="850"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <conv:StringToDecimalConverter x:Key="StringToDecimal"/>
+        <conv:TransactionDirectionConverter x:Key="TransactionDirectionConverter"/>
+    </Window.Resources>
+    <Grid>
+        <Rectangle Margin="0,0,580,0" Fill="#FF5771FF"/>
+        <Label Content="{Binding DisplayedCurrencyAmount.CurrencyCode, UpdateSourceTrigger=PropertyChanged}" Margin="0,113,580,0" VerticalAlignment="Top" FontFamily="Bahnschrift" Foreground="White" FontSize="58" Height="72" HorizontalContentAlignment="Center"/>
+        <Border CornerRadius="9.5" Background="White" Margin="8,185,591,233">
+            <Label x:Name="AmountDisplay" Content="{Binding DisplayedCurrencyAmount.FormattedAmount, UpdateSourceTrigger=PropertyChanged}" FontFamily="Bahnschrift" Foreground="Black" FontSize="34" HorizontalContentAlignment="Center" Margin="9,10,9,10" VerticalContentAlignment="Center" />
+        </Border>
+        <TextBlock Text="{Binding DisplayedCurrencyAmount.AmountId}" TextWrapping="Wrap" VerticalAlignment="Bottom" FontFamily="Bahnschrift" Foreground="#FF353535" FontSize="16" Height="69" Margin="14,0,596,20" TextAlignment="Center"/>
+        <TextBlock Margin="26,307,606,0" TextWrapping="Wrap" Text="{Binding DisplayedCurrencyAmount.Description, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" FontFamily="Bahnschrift" FontSize="18" Foreground="White" Height="90" TextAlignment="Center" IsEnabled="False"/>
+        <Button Content="Go Back" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="100" Height="35" Background="#00DDDDDD" BorderBrush="White" FontFamily="Bahnschrift SemiBold" Foreground="White" FontSize="16" Click="Button_Click"/>
+        <ScrollViewer Margin="270,0,0,0">
+            <StackPanel>
+                <Label Content="Fixed Amount Modification" HorizontalAlignment="Left" Margin="0,15,0,0" Width="235" FontFamily="Bahnschrift SemiBold" FontSize="18" Foreground="#FF5771FF" Height="32"/>
+                <TextBlock HorizontalAlignment="Left" Margin="5,0,0,0" TextWrapping="Wrap" Text="Increase or decrease the current state of the amount with a provided fixed value. Note that if you tend to decrease the amount with greater value than the current one it will be set to 0, rather than negative." Width="522" FontFamily="Bahnschrift SemiLight" FontSize="14" Height="53" IsEnabled="False" Foreground="DarkGray"/>
+                <TextBox Text="{Binding ActionsPayload.FixedAmount, Mode=TwoWay, Converter={StaticResource StringToDecimal}, UpdateSourceTrigger=PropertyChanged}" x:Name="FixedAmount" TextWrapping="Wrap" Margin="0,10,-270,0" Padding="5" Width="160" Height="35" TextAlignment="Right" FontFamily="Bahnschrift SemiBold" FontSize="20" BorderBrush="#FF001427" Foreground="#FF001427" />
+                <Button Command="{Binding FixedIncreasementCommand}" Margin="0,-36,-475,0" Width="37" Height="37" Content="+" Foreground="White" FontFamily="Bahnschrift SemiBold" Background="#FF001427" FontSize="18" BorderBrush="White"/>
+                <Button Command="{Binding FixedDecreasmentCommand}" Margin="0,-37,-65,0" Width="37" Height="37" Content="-" Foreground="White" FontFamily="Bahnschrift SemiBold" Background="#FF8D0901" FontSize="18" BorderBrush="White"/>
+                <Label Content="Transactions" Margin="-320,30,0,0" Width="235" FontFamily="Bahnschrift SemiBold" FontSize="18" Foreground="#FF5771FF" Height="32"/>
+                <TextBlock HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" Text="The transactions allow you to select a set of amounts to be transfered to the given one. Note that when transfering one amount to another you reduce the first one to 0." Width="522" FontFamily="Bahnschrift SemiLight" FontSize="14" Height="53" IsEnabled="False" Foreground="DarkGray"/>
+                <ItemsControl ItemsSource="{Binding TransferableAmounts}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <RadioButton 
+                                Command="{Binding DataContext.SelectTransactionSourceCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                CommandParameter="{Binding AmountId}"
+                                Content="{Binding FormattedAmount}" 
+                                GroupName="TransactionOptions"
+                                Margin="25,5,0,0" FontFamily="Bahnschrift SemiBold" FontSize="16" HorizontalAlignment="Left" Width="535" RenderTransformOrigin="0.5,0.5" Height="25"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Button Command="{Binding ChangeTransactionDirectionCommand}" Margin="-380,30,0,0" Width="165" Height="35" Content="Change Direction" Foreground="#FF001427" FontFamily="Bahnschrift SemiBold" BorderBrush="#FF001427" FontSize="18" Background="{x:Null}"/>
+                <TextBlock Text="{Binding ActionsPayload.TransactionDirection, Converter={StaticResource TransactionDirectionConverter}}" HorizontalAlignment="Left" Margin="175,-27,0,0" TextWrapping="Wrap" Width="65" FontFamily="Bahnschrift Bold" FontSize="18" Height="25" IsEnabled="False" Foreground="#FF8D0901"/>
+                <Button Command="{Binding TransferCommand}" Margin="380,-35,0,0" Width="125" Height="35" Content="Transfer" Foreground="White" FontFamily="Bahnschrift SemiBold" Background="#FF001427" FontSize="18" BorderBrush="White"/>
+                <Label Content="Multi Currency Amount Representations" Margin="-210,30,0,0" Width="345" FontFamily="Bahnschrift SemiBold" FontSize="18" Foreground="#FF5771FF" Height="32"/>
+                <TextBlock HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" Text="This section lets you preview the equivalent value of a given amount in different currencies (before any potential conversion) using the MultiCurrencyAmount model." Width="522" FontFamily="Bahnschrift SemiLight" FontSize="14" Height="53" IsEnabled="False" Foreground="DarkGray"/>
+                <ItemsControl ItemsSource="{Binding CurrencyRepresentations}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Width="200" FontFamily="Bahnschrift Bold" FontSize="18" Height="25" IsEnabled="False" Foreground="#FF001427"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <ComboBox ItemsSource="{Binding AvailableCurrencyCodes}" SelectedItem="{Binding ActionsPayload.NewCurrencyRepresentation, Mode=TwoWay}" HorizontalAlignment="Left" Margin="225,15,0,0" VerticalAlignment="Top" Width="95" FontFamily="Bahnschrift SemiBold" FontSize="16" Height="25" Background="{x:Null}"/>
+                <Button Command="{Binding CurrencyRepresentationCommand}" Margin="0,-30,-310,0" Width="200" Height="35" Content="Add Representation" Foreground="White" FontFamily="Bahnschrift SemiBold" Background="#FF001427" FontSize="18" BorderBrush="White"/>
+                <Label Content="Manage Account" Margin="-210,30,0,0" Width="345" FontFamily="Bahnschrift SemiBold" FontSize="18" Foreground="#FF5771FF" Height="32"/>
+                <TextBlock HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" Text="Modify the existing account by executing currency conversion or delete the amount from the archive." Width="522" FontFamily="Bahnschrift SemiLight" FontSize="14" Height="53" IsEnabled="False" Foreground="DarkGray"/>
+                <ComboBox ItemsSource="{Binding ConversionCurrencyCodes}" SelectedItem="{Binding ActionsPayload.CurrencyConversionCode, Mode=TwoWay}" HorizontalAlignment="Left" Margin="165,0,0,0" VerticalAlignment="Top" Width="95" FontFamily="Bahnschrift SemiBold" FontSize="16" Height="25" Background="{x:Null}"/>
+                <Button Command="{Binding ConversionCommand}" Margin="90,-30,0,0" Width="100" Height="35" Content="Convert" Foreground="#FF8D0901" FontFamily="Bahnschrift SemiBold" BorderBrush="#FF8D0901" FontSize="18" Background="{x:Null}"/>
+                <Button Command="{Binding DeleteCommand}" Margin="360,-36,0,50" Width="150" Height="37" Content="Delete Amount" Foreground="White" FontFamily="Bahnschrift SemiBold" Background="#FF8D0901" FontSize="18" BorderBrush="White"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

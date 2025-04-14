@@ -1,0 +1,54 @@
+﻿<Window x:Class="ForexFlow.View.CurrencyManagement"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ForexFlow.View"
+        xmlns:conv="clr-namespace:ForexFlow.View.Converters"
+        mc:Ignorable="d"
+        Title="Currency Management" Height="450" Width="865" MinHeight="450" MaxHeight="450" MinWidth="865" MaxWidth="865"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <conv:StringToDecimalConverter x:Key="StringToDecimal"/>
+    </Window.Resources>
+    <Grid>
+        <Border Margin="-790,-365,0,0" Width="30" Height="30" CornerRadius="5" BorderThickness="1.5" BorderBrush="#FF7B7B7B">
+            <Button  Margin="-0.5,-2,0,0" Width="30" Height="30" FontSize="16" Background="{x:Null}" BorderThickness="0" Foreground="#FF7B7B7B" Click="OnBack" >📑</Button>
+        </Border>
+        <Label Width="500" Height="50" Margin="-250,-347.5,0,0" FontFamily="Bahnschrift SemiBold" FontSize="22" Foreground="black">Currency Display</Label>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,35,245,0" Padding="7.5">
+            <ItemsControl ItemsSource="{Binding DisplayedCurrencies}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="#FF5771FF" BorderThickness="1.5"  Height="175" Width="175" Margin="7.5">
+                            <StackPanel Height="175" Width="175">
+                                <TextBlock Text="{Binding Code}" Foreground="#FF5771FF" FontFamily="Bahnschrift SemiBold" FontSize="46" TextAlignment="Center" Margin="0,20,0,0"/>
+                                <TextBlock Text="{Binding ExchangeRate}" FontFamily="Bahnschrift SemiBold" FontSize="22" TextAlignment="Center" Margin="0,5,0,0"/>
+                                <TextBlock FontFamily="Bahnschrift Light" Foreground="#FF7B7B7B" FontSize="12.5" TextAlignment="Center">exchange rate</TextBlock>
+                                <TextBlock Text="{Binding Name}" FontFamily="Bahnschrift" FontSize="18" TextAlignment="Center" Margin="0,15,0,0"/>
+                                <Button Command="{Binding DataContext.EditSelectCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding Code}" Width="20" Height="20" Margin="142,-290,0,0" Foreground="#FF7B7B7B" BorderBrush="{x:Null}" Background="{x:Null}">✒️</Button>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+        <Rectangle HorizontalAlignment="Left" Height="434" Margin="620,0,0,0" VerticalAlignment="Center" Width="245"  Fill="#FF5771FF"/>
+        <Label Margin="0,-325,-625,0" Width="140" Height="60" Foreground="White" FontFamily="Bahnschrift SemiBold" FontSize="22">Setting Panel</Label>
+        <TextBlock Margin="0,-235,-625, 0" Width="200" Height="80" TextWrapping="Wrap" TextAlignment="Center" FontFamily="Bahnschrift" FontSize="13" Foreground="#FFE6E6E6">Modify the currency archive by adding a new one or update the exchange range of the already existings ones.</TextBlock>
+        <Button Margin="0,-100, -625, 0"  Width="165" Height="40" FontFamily="Bahnschrift SemiBold" FontSize="16" Foreground="#FF5771FF" BorderBrush="{x:Null}" Background="White" Click="OpenAddForm">Add New Currency</Button>
+        <Border Width="200" Height="10" Margin="0,-15,-625,0" BorderThickness="0,0,0,1.5" BorderBrush="White"/>
+        <TextBlock Margin="0,100,-625,0" Width="170" Height="60" Foreground="White" FontFamily="Bahnschrift" FontSize="16" IsEnabled="False">
+            <Run Text="Currently Editing: " />
+            <Run Text="{Binding ActionsPayload.EditingCurrencyCode}"/>
+        </TextBlock>
+        <Label Margin="0,175,-625,0" Width="100" Height="60" Foreground="White" FontFamily="Bahnschrift" FontSize="14">exchange rate</Label>
+        <TextBox Text="{Binding ActionsPayload.ExchangeRateHolder, Converter={StaticResource StringToDecimal}, UpdateSourceTrigger=PropertyChanged}" Margin="0,200,-625,0" Width="100" Height="30" FontFamily="Bahnschrift" TextAlignment="Right" FontSize="24"/>
+        <Button Command="{Binding UpdateExchangeRateCommand}" Margin="0,325,-625, 0"  Width="165" Height="40" FontFamily="Bahnschrift SemiBold" FontSize="16" Foreground="#FF5771FF" BorderBrush="{x:Null}" Background="White">Save Changes</Button>
+    </Grid>
+</Window>
