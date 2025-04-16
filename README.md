@@ -14,33 +14,26 @@ This project allowed me to explore the essentials of desktop app development and
 
 ![Poster](documentation/poster.png)
 
+---
+
 ### 💻 Tech Stack & Process of Development
 
 This is a solo project, with all design, logic, and implementation completed independently. Below is an overview of the tools and technologies used:
 
-UI/UX Design
-
-XAML (WPF UI layout & styling)
-
 #### Desktop Application (Frontend + Logic)
 
-.NET (C#)
-
-WPF (Windows Presentation Foundation)
-
-MVVM Design Pattern
-
-INotifyPropertyChanged, ICommand for ViewModel bindings
+- .NET (C#)
+- WPF (Windows Presentation Foundation)
+- XAML (WPF UI layout & styling)
+- MVVM Design Pattern
+- INotifyPropertyChanged, ICommand for ViewModel bindings
 
 #### Backend & Data Access
 
-Entity Framework
-
-SQLite
-
-Repository Pattern + Unit of Work
-
-LINQ for querying data
+- Entity Framework
+- SQLite
+- Repository Pattern + Unit of Work
+- LINQ for querying data
 
 ### 📑 Detailed Overview & Documentation
 
